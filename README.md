@@ -14,11 +14,11 @@ development there.
 3. To automatically regenerate the wiki page after each commit to the
    master you can
 
-(i) set up a web-hook in the github project page that runs this file,
+    (i) set up a web-hook in the github project page that runs this file,
     or
 
-(ii) "watch" the project, and extend your .procmailrc file:
-```
+    (ii) "watch" the project, and extend your .procmailrc file:
+    ```
     :0
     * ^List-Archive:.https://github.com/NetSys/bess
     {
@@ -26,7 +26,7 @@ development there.
         * ^Merged.#[0-9]
         | $HOME/src/bess-doc2wiki/update.sh
     }
-```
+    ```
 
 It seems anyone can edit the wiki using github's the web interface,
 but `git push` is restricted to those how have write access to the
