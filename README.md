@@ -14,7 +14,7 @@ development there.
 3. To automatically regenerate the wiki page after each commit to the
    master you can
 
-    (i) set up a web-hook in the github project page that runs this file,
+    (i) set up a web-hook in the github project page that runs `update.sh`,
     or
 
     (ii) "watch" the project, and extend your .procmailrc file:
