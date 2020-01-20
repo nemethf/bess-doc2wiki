@@ -39,8 +39,14 @@ cat >"$header_file" <<'EOF'
 __This text is auto-generated from comments in the module code.  To edit the contents of this page, please edit the comments in `bess/protobuf` in the main BESS repository.__  To see how this page is automatically re-generated after each commit, check out [this repository](https://github.com/nemethf/bess-doc2wiki).
 EOF
 
-protoc --doc_out=bess,Modules.md:. module_msg.proto
-cat "$header_file" Modules.md | sed 's/Command/\./g' | sed 's/Arg/()/g' > Modules.md.out
+ODIR="$BESS_DIR"/protobuf/protoc-out
+
+mkdir -p $ODIR
+docker run --rm -v "$ODIR":/out -v $(pwd):/protos:ro \
+       pseudomuto/protoc-gen-doc --doc_opt=markdown,Modules.md
+docker run --rm -v "$ODIR":/out -v $(pwd):/protos:ro \
+       pseudomuto/protoc-gen-doc --doc_opt=json,Modules.json
+cat "$header_file" "$ODIR"/Modules.md | sed 's/Command/\./g' | sed 's/Arg/()/g' > Modules.md.out
 mv Modules.md.out "$BESS_WIKI_DIR"/$WIKI_PAGE.md
 rm -f "$header_file"
 

@@ -9,7 +9,7 @@ repositories into a common directory.  `bess` and `bess.wiki` should
 not deviate from origin master, i.e., there should be no local
 development there.
 
-2. Compile protoc-gen-doc
+2. `docker pull Compile protoc-gen-doc`
 
 3. To automatically regenerate the wiki page after each commit to the
    master you can
