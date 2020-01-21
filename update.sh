@@ -1,6 +1,6 @@
 #!/bin/bash
 # Automatically regenerate bess documentation and update the wiki page
-# Copyright (C) 2017 Felicián Németh
+# Copyright (C) 2017-2020 Felicián Németh
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,11 +43,11 @@ ODIR="$BESS_DIR"/protobuf/protoc-out
 
 mkdir -p $ODIR
 docker run --rm -v "$ODIR":/out -v $(pwd):/protos:ro \
-       pseudomuto/protoc-gen-doc --doc_opt=markdown,Modules.md
-docker run --rm -v "$ODIR":/out -v $(pwd):/protos:ro \
-       pseudomuto/protoc-gen-doc --doc_opt=json,Modules.json
-cat "$header_file" "$ODIR"/Modules.md | sed 's/Command/\./g' | sed 's/Arg/()/g' > Modules.md.out
-mv Modules.md.out "$BESS_WIKI_DIR"/$WIKI_PAGE.md
+       pseudomuto/protoc-gen-doc --doc_opt=markdown,Modules.md \
+       module_msg.proto util_msg.proto
+cat "$header_file" "$ODIR"/Modules.md \
+    | sed 's/Command/\./g' | sed 's/Arg/()/g' > Modules.md.out
+"$DIR/fix_markdown" Modules.md.out "$BESS_WIKI_DIR"/$WIKI_PAGE.md
 rm -f "$header_file"
 
 cd "$BESS_WIKI_DIR"
