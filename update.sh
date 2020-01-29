@@ -40,14 +40,18 @@ __This text is auto-generated from comments in the module code.  To edit the con
 EOF
 
 ODIR="$BESS_DIR"/protobuf/protoc-out
-
 mkdir -p $ODIR
+
+# Fix: // int64 warmup = 1; /// removed:
+sed 's/\/\/.*\/\/\/.*//' module_msg.proto > module_msg_.proto
+
 docker run --rm -v "$ODIR":/out -v $(pwd):/protos:ro \
        pseudomuto/protoc-gen-doc --doc_opt=markdown,Modules.md \
-       module_msg.proto util_msg.proto
+       module_msg_.proto util_msg.proto
 cat "$header_file" "$ODIR"/Modules.md \
     | sed 's/Command/\./g' | sed 's/Arg/()/g' > Modules.md.out
 "$DIR/fix_markdown" Modules.md.out "$BESS_WIKI_DIR"/$WIKI_PAGE.md
+rm -f module_msg_.proto
 rm -f "$header_file"
 
 cd "$BESS_WIKI_DIR"
