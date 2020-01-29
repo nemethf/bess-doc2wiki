@@ -38,6 +38,11 @@ def fix_and_write_str(string, needs_fixing, outfile):
 def fix(infile, outfile):
   inside = False
   for line in infile:
+    # Protect agains runaway `
+    # E.g.: L2ForwardCommandPopulateArg
+    match = re.search(r'^\s*$', line)
+    if match:
+      inside = False
     match = re.search(r'`', line)
     while match:
       beginning = line[:match.start(0) + 1]
