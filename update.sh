@@ -47,7 +47,7 @@ sed 's/\/\/.*\/\/\/.*//' module_msg.proto > module_msg_.proto
 
 docker run --rm -v "$ODIR":/out -v $(pwd):/protos:ro \
        pseudomuto/protoc-gen-doc --doc_opt=markdown,Modules.md \
-       module_msg_.proto util_msg.proto
+       module_msg_.proto ports/port_msg.proto util_msg.proto
 cat "$header_file" "$ODIR"/Modules.md \
     | sed 's/Command/\./g' | sed 's/Arg/()/g' > Modules.md.out
 "$DIR/fix_markdown" Modules.md.out "$BESS_WIKI_DIR"/$WIKI_PAGE.md
